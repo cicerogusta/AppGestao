@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "70835457710",
+    "firebase_url": "https://appgestao-677d4-default-rtdb.firebaseio.com",
+    "project_id": "appgestao-677d4",
+    "storage_bucket": "appgestao-677d4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:70835457710:android:2407c4f3fa5b064dcc273f",
+        "android_client_info": {
+          "package_name": "com.ciceropinheiro.appgestao"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "70835457710-srfsr0svts609dc9damoj80k7rhlo4g8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCe1uwOpdCPgjqIDIM7ciGqqqCiqYu9TWY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "70835457710-srfsr0svts609dc9damoj80k7rhlo4g8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
