@@ -1,21 +1,19 @@
 package com.ciceropinheiro.appgestao.data.repository
 
 import android.content.SharedPreferences
-import com.ciceropinheiro.appgestao.data.repository.AuthRepository
+import androidx.lifecycle.MutableLiveData
+import com.ciceropinheiro.appgestao.data.model.SignUpUser
 import com.ciceropinheiro.appgestao.data.model.User
-import com.example.firebasewithmvvm.util.FireStoreCollection
-import com.example.firebasewithmvvm.util.SharedPrefConstants
 import com.ciceropinheiro.appgestao.util.UiState
+import com.example.firebasewithmvvm.util.SharedPrefConstants
 import com.google.firebase.auth.*
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.firestore.FirebaseFirestore
-import com.google.gson.Gson
+import com.google.firebase.database.*
+
 
 class AuthRepositoryImp(
     val auth: FirebaseAuth,
-    val database: FirebaseDatabase,
     val appPreferences: SharedPreferences,
+    val database: DatabaseReference
 ) : AuthRepository {
 
     override fun loginUser(
@@ -52,12 +50,25 @@ class AuthRepositoryImp(
         result.invoke()
     }
 
-    override fun setUserInDatabase(user: User) {
-        database.reference.child("Users").setValue(user)
+
+
+     override fun setUserProfileInDatabase(user: User) {
+        database.child(auth.currentUser?.uid.toString()).setValue(user)
+
     }
 
-    override fun getUserInDatabase(): FirebaseUser? {
-        return auth.currentUser
+     override fun getUserProfileInDatabase(liveData: MutableLiveData<User>) {
+        val uid = auth.currentUser?.uid.toString()
+        database.child(uid).addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                liveData.postValue(snapshot.getValue(User::class.java))
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+
+        })
     }
+
 
 }

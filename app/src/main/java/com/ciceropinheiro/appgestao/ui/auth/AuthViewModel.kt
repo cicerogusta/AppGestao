@@ -7,18 +7,23 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.ciceropinheiro.appgestao.data.model.SignUpUser
 import com.ciceropinheiro.appgestao.data.model.User
 import com.ciceropinheiro.appgestao.data.repository.AuthRepository
 import com.ciceropinheiro.appgestao.util.UiState
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    val repository: AuthRepository
-): ViewModel() {
+    private val repository: AuthRepository
+
+) : ViewModel() {
 
     private val _login = MutableLiveData<UiState<String>>()
     val login: LiveData<UiState<String>>
@@ -40,26 +45,30 @@ class AuthViewModel @Inject constructor(
         repository.loginUser(
             email,
             password
-        ){
+        ) {
             _login.value = it
         }
     }
 
     fun forgotPassword(email: String) {
         _forgotPassword.value = UiState.Loading
-        repository.forgotPassword(email){
+        repository.forgotPassword(email) {
             _forgotPassword.value = it
         }
     }
 
-    fun logout(result: () -> Unit){
+    fun logout(result: () -> Unit) {
         repository.logout(result)
     }
 
-    fun registerUserInDatabase(user: User) {
-        repository.setUserInDatabase(user)
-        _user.value = user
+    fun setUserProfile(user: User) {
+        repository.setUserProfileInDatabase(user)
     }
+
+    fun getUserProfile() {
+        repository.getUserProfileInDatabase(_user)
+    }
+
 
     fun startTwitter(context: Context): Intent? {
         var intent: Intent?
@@ -119,7 +128,10 @@ class AuthViewModel @Inject constructor(
         } catch (e: Exception) {
             // no Twitter app, revert to browser
             intent =
-                Intent(Intent.ACTION_VIEW, Uri.parse("https://facebook.com/prefeituradepedrasdefogo"))
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://facebook.com/prefeituradepedrasdefogo")
+                )
         }
         if (intent != null) {
             startActivity(context, intent, null)

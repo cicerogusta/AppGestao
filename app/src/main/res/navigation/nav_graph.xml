@@ -19,9 +19,6 @@
         android:id="@+id/homeFragment"
         android:name="com.ciceropinheiro.appgestao.ui.home.HomeFragment"
         android:label="HomeFragment" >
-        <argument
-            android:name="User"
-            app:argType="com.ciceropinheiro.appgestao.data.model.User" />
     </fragment>
     <fragment
         android:id="@+id/coordenadorFragment"

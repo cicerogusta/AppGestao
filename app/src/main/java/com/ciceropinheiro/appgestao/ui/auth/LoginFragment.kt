@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.ciceropinheiro.appgestao.data.model.SignUpUser
 import com.ciceropinheiro.appgestao.data.model.User
 import com.ciceropinheiro.appgestao.databinding.FragmentLoginBinding
 import com.ciceropinheiro.appgestao.util.UiState
@@ -31,8 +32,7 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observer()
         setListeners()
-        val user = User("1", "teste1", "Professor", "teste@gmail.com")
-        viewModel.registerUserInDatabase(user)
+
 //        binding.forgotPassLabel.setOnClickListener {
 //            findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
 //        }
@@ -58,12 +58,15 @@ class LoginFragment : Fragment() {
                     email = binding.usernameInput.text.toString(),
                     password = binding.pass.text.toString()
                 )
+
+
+
             }
         }
     }
 
     fun observer(){
-        viewModel.login.observe(viewLifecycleOwner) { state ->
+    viewModel.login.observe(viewLifecycleOwner) { state ->
             when(state){
                 is UiState.Loading -> {
                     binding.loginProgress.show()
@@ -75,25 +78,18 @@ class LoginFragment : Fragment() {
                 is UiState.Success -> {
                     binding.loginProgress.hide()
                     toast(state.data)
-                    verificateUser()
+                    callFragment()
                 }
             }
         }
     }
 
-    fun verificateUser() {
+    fun callFragment() {
 
-        viewModel.user.observe(viewLifecycleOwner) {
-            val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment(it)
+        val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
 
-            if (it.nivelUsuario == "Coordenador") {
 
-                findNavController().navigate(action)
-
-            } else {
-                findNavController().navigate(action)
-            }
-        }
+        findNavController().navigate(action)
     }
 
     fun validation(): Boolean {
