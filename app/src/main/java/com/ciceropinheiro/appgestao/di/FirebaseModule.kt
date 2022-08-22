@@ -2,6 +2,7 @@ package com.ciceropinheiro.appgestao.di
 
 import com.example.firebasewithmvvm.util.FirebaseStorageConstants
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -20,6 +21,12 @@ object FirebaseModule {
     @Singleton
     fun provideFirebaseDatabaseInstance(): FirebaseDatabase{
         return FirebaseDatabase.getInstance()
+    }
+
+    @Provides
+    @Singleton
+    fun provideDatabaseReference(): DatabaseReference{
+        return FirebaseDatabase.getInstance().getReference("Users")
     }
 
     @Provides
