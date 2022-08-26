@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.navigation.fragment.navArgs
-import com.ciceropinheiro.appgestao.data.model.SignUpUser
+import androidx.navigation.fragment.findNavController
 import com.ciceropinheiro.appgestao.data.model.User
 import com.ciceropinheiro.appgestao.databinding.FragmentHomeBinding
 import com.ciceropinheiro.appgestao.ui.auth.AuthViewModel
+import com.ciceropinheiro.appgestao.ui.auth.LoginFragmentDirections
 import com.example.firebasewithmvvm.util.toast
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,7 +18,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     lateinit var binding: FragmentHomeBinding
-    val authViewModel: AuthViewModel by viewModels()
+    val viewModel: AuthViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,16 +33,33 @@ class HomeFragment : Fragment() {
         observer()
 
 
+        binding.imageButtonDiario.setOnClickListener {
+            callFragment()
+        }
+
+
+
 
 
     }
 
     private fun observer() {
-        authViewModel.getUserProfile()
-        authViewModel.user.observe(viewLifecycleOwner) {
+        viewModel.getUserProfile()
+        viewModel.user.observe(viewLifecycleOwner) {
 
             binding.user = it
+            if (it == null) {
+                toast("ERRO")
+            }
         }
+    }
+
+    fun callFragment() {
+
+        val action = HomeFragmentDirections.actionHomeFragmentToDiarioFragment()
+
+
+        findNavController().navigate(action)
     }
 
 }

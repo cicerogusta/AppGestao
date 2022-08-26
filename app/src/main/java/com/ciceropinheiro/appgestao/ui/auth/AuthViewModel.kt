@@ -7,14 +7,9 @@ import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.ciceropinheiro.appgestao.data.model.SignUpUser
 import com.ciceropinheiro.appgestao.data.model.User
 import com.ciceropinheiro.appgestao.data.repository.AuthRepository
 import com.ciceropinheiro.appgestao.util.UiState
-import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ValueEventListener
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -32,6 +27,10 @@ class AuthViewModel @Inject constructor(
     private val _user = MutableLiveData<User>()
     val user: LiveData<User>
         get() = _user
+
+    private val _users = MutableLiveData<List<User>>()
+    val users: LiveData<List<User>>
+        get() = _users
 
     private val _forgotPassword = MutableLiveData<UiState<String>>()
     val forgotPassword: LiveData<UiState<String>>
@@ -61,12 +60,16 @@ class AuthViewModel @Inject constructor(
         repository.logout(result)
     }
 
-    fun setUserProfile(user: User) {
-        repository.setUserProfileInDatabase(user)
+    fun registerUser(email: String, senha: String) {
+        repository.registerUser(email, senha)
     }
 
     fun getUserProfile() {
         repository.getUserProfileInDatabase(_user)
+    }
+
+    fun getAllUser() {
+        repository.getAllUsers(_users, _user)
     }
 
 

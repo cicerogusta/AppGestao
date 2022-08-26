@@ -4,7 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/cicer/AndroidStudioProjects/AppGestao/app/src/main/res/layout/activity_main.xml" value="0.18541666666666667" />
+        <entry key="..\:/Users/cicer/AndroidStudioProjects/AppGestao/app/src/main/res/layout/fragment_diario.xml" value="0.25" />
+        <entry key="..\:/Users/cicer/AndroidStudioProjects/AppGestao/app/src/main/res/layout/fragment_diario_item.xml" value="0.33" />
+        <entry key="..\:/Users/cicer/AndroidStudioProjects/AppGestao/app/src/main/res/layout/fragment_diario_items.xml" value="0.5" />
+        <entry key="..\:/Users/cicer/AndroidStudioProjects/AppGestao/app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="..\:/Users/cicer/AndroidStudioProjects/AppGestao/app/src/main/res/layout/fragment_login.xml" value="0.18541666666666667" />
+        <entry key="..\:/Users/cicer/AndroidStudioProjects/AppGestao/app/src/main/res/layout/fragment_visualizar_diario.xml" value="0.18697916666666667" />
         <entry key="..\:/repositorios/AppGestao/app/src/main/res/layout/fragment_diario.xml" value="0.2015625" />
         <entry key="..\:/repositorios/AppGestao/app/src/main/res/layout/fragment_diario_item.xml" value="0.2015625" />
         <entry key="..\:/repositorios/AppGestao/app/src/main/res/layout/fragment_home.xml" value="0.2015625" />
