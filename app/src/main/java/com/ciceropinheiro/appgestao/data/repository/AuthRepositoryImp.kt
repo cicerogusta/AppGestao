@@ -2,12 +2,14 @@ package com.ciceropinheiro.appgestao.data.repository
 
 import android.content.SharedPreferences
 import androidx.lifecycle.MutableLiveData
-import com.ciceropinheiro.appgestao.data.model.SignUpUser
 import com.ciceropinheiro.appgestao.data.model.User
 import com.ciceropinheiro.appgestao.util.UiState
 import com.example.firebasewithmvvm.util.SharedPrefConstants
-import com.google.firebase.auth.*
-import com.google.firebase.database.*
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 
 
 class AuthRepositoryImp(
@@ -52,16 +54,58 @@ class AuthRepositoryImp(
 
 
 
-     override fun setUserProfileInDatabase(user: User) {
-        database.child(auth.currentUser?.uid.toString()).setValue(user)
+     override fun registerUser(email: String, senha: String) {
+         auth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener {
+             if (it.isSuccessful) {
+                 val firebaseUser = auth.currentUser
+                 val teste = User("1", "teste", "aaa", "teste@gmail.com")
+                 val creuza = User("2", "creuza", "bbb", "creuza@gmail.com")
+                 val antonio = User("3", "antonio", "ccc", "antonio@gmail.com")
+                     database.child(firebaseUser!!.uid).setValue(teste)
+                     database.child(firebaseUser!!.uid).setValue(creuza)
+                     database.child(firebaseUser!!.uid).setValue(antonio)
 
-    }
+             }
+         }
+
+
+     }
 
      override fun getUserProfileInDatabase(liveData: MutableLiveData<User>) {
         val uid = auth.currentUser?.uid.toString()
         database.child(uid).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 liveData.postValue(snapshot.getValue(User::class.java))
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+
+        })
+    }
+
+    override fun getAllUsers(liveDataAllUsers: MutableLiveData<List<User>>, liveDataProfile: MutableLiveData<User>) {
+        database.addValueEventListener(object : ValueEventListener {
+            val listUsuarios = mutableListOf<User>()
+
+
+            override fun onDataChange(snapshot: DataSnapshot) {
+
+                for (users in snapshot.children) {
+                    val usersFirebase =
+                        users.getValue(User::class.java)
+                    if (usersFirebase != null) {
+                        listUsuarios.add(usersFirebase)
+                        liveDataAllUsers.value?.forEach {
+                            if (it.nomeCompleto == liveDataProfile.value?.nomeCompleto) {
+                                listUsuarios.remove(liveDataProfile.value)
+
+                            }
+                        }
+                        liveDataAllUsers.value = listUsuarios
+                    }
+                }
+
             }
 
             override fun onCancelled(error: DatabaseError) {

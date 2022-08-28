@@ -17,14 +17,14 @@
         android:background="@drawable/img_1">
 
         <ImageButton
-            android:id="@+id/imageButton2"
+            android:id="@+id/imageButtonDiario"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
 
             android:layout_marginBottom="8dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             app:layout_constraintBottom_toTopOf="@+id/textView3"
-            app:layout_constraintEnd_toStartOf="@+id/button"
+            app:layout_constraintEnd_toStartOf="@+id/buttonSolicitacoes"
             app:layout_constraintStart_toStartOf="@+id/imageView3"
             app:layout_constraintTop_toBottomOf="@+id/imageView3"
             app:srcCompat="@drawable/livro" />
@@ -38,12 +38,12 @@
             android:fontFamily="@font/poppins_medium"
             android:textColor="@color/white"
             android:textSize="16sp"
-            app:layout_constraintEnd_toEndOf="@+id/imageButton2"
-            app:layout_constraintStart_toStartOf="@+id/imageButton2"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton2" />
+            app:layout_constraintEnd_toEndOf="@+id/imageButtonDiario"
+            app:layout_constraintStart_toStartOf="@+id/imageButtonDiario"
+            app:layout_constraintTop_toBottomOf="@+id/imageButtonDiario" />
 
         <ImageButton
-            android:id="@+id/button"
+            android:id="@+id/buttonSolicitacoes"
             android:layout_width="198dp"
             android:layout_height="164dp"
             android:layout_marginStart="8dp"
@@ -53,8 +53,8 @@
             android:src="@drawable/solici"
             app:layout_constraintBottom_toBottomOf="@+id/textView3"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/imageButton2"
-            app:layout_constraintTop_toTopOf="@+id/imageButton2"
+            app:layout_constraintStart_toEndOf="@+id/imageButtonDiario"
+            app:layout_constraintTop_toTopOf="@+id/imageButtonDiario"
             app:layout_constraintVertical_bias="0.653" />
 
         <ImageView

@@ -19,9 +19,16 @@
         android:id="@+id/homeFragment"
         android:name="com.ciceropinheiro.appgestao.ui.home.HomeFragment"
         android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_diarioFragment"
+            app:destination="@id/diarioFragment" />
     </fragment>
     <fragment
         android:id="@+id/coordenadorFragment"
         android:name="com.ciceropinheiro.appgestao.ui.home.ProfessorFragment"
         android:label="CoordenadorFragment" />
+    <fragment
+        android:id="@+id/diarioFragment"
+        android:name="com.ciceropinheiro.appgestao.ui.fragments.DiarioFragment"
+        android:label="DiarioFragment" />
 </navigation>

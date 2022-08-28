@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.ciceropinheiro.appgestao.data.model.SignUpUser
 import com.ciceropinheiro.appgestao.data.model.User
 import com.ciceropinheiro.appgestao.databinding.FragmentLoginBinding
 import com.ciceropinheiro.appgestao.util.UiState
-import com.example.firebasewithmvvm.util.*
+import com.example.firebasewithmvvm.util.hide
+import com.example.firebasewithmvvm.util.isValidEmail
+import com.example.firebasewithmvvm.util.show
+import com.example.firebasewithmvvm.util.toast
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -32,6 +34,9 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         observer()
         setListeners()
+//        viewModel.registerUser("teste@gmail.com", "12345678")
+//        viewModel.registerUser("creuza@gmail.com", "12345678")
+//        viewModel.registerUser("antonio@gmail.com", "12345678")
 
 //        binding.forgotPassLabel.setOnClickListener {
 //            findNavController().navigate(R.id.action_loginFragment_to_forgotPasswordFragment)
