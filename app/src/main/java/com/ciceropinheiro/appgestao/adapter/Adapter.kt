@@ -7,8 +7,9 @@ import com.ciceropinheiro.appgestao.data.model.User
 import com.ciceropinheiro.appgestao.databinding.FragmentDiarioItemBinding
 
 class UserAdapter(
-    private val UsersList: List<User>
+    private val usersList: MutableList<User>
 ) : RecyclerView.Adapter<UsersViewHolder>() {
+
 
     private lateinit var binding: FragmentDiarioItemBinding
 
@@ -18,10 +19,10 @@ class UserAdapter(
     }
 
     override fun onBindViewHolder(holder: UsersViewHolder, position: Int) {
-        val largeNews = UsersList[position]
+        val largeNews = usersList[position]
         holder.bind(largeNews)
     }
 
-    override fun getItemCount(): Int = UsersList.size
+    override fun getItemCount(): Int = usersList.size
 
 }
