@@ -37,11 +37,17 @@ class DiarioFragment : Fragment() {
     private fun observer() {
         viewModel.getAllUser()
         viewModel.getUserProfile()
-        viewModel.users.observe(viewLifecycleOwner) {
-            binding.diarioItemPeopleRv.apply {
-                this.layoutManager = LinearLayoutManager(requireContext())
-                this.adapter = UserAdapter(it)
+        viewModel.user.observe(viewLifecycleOwner) { currentUserProfile ->
+            viewModel.users.observe(viewLifecycleOwner) { listUsers ->
+                listUsers.remove(currentUserProfile)
+                binding.diarioItemPeopleRv.apply {
+                    layoutManager = LinearLayoutManager(requireContext())
+                    adapter = UserAdapter(listUsers)
+                }
+
+
             }
+
         }
     }
 }

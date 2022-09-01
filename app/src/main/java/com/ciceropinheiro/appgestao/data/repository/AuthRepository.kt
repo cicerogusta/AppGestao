@@ -10,5 +10,5 @@ interface AuthRepository {
     fun logout(result: () -> Unit)
     fun registerUser(email: String, senha: String)
     fun getUserProfileInDatabase(liveData: MutableLiveData<User>)
-    fun getAllUsers(liveData: MutableLiveData<List<User>>,liveDataProfile: MutableLiveData<User>)
+    fun getAllUsers(liveData: MutableLiveData<MutableList<User>>,liveDataProfile: MutableLiveData<User>)
 }

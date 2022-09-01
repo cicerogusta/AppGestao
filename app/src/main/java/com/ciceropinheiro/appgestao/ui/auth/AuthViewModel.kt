@@ -28,8 +28,8 @@ class AuthViewModel @Inject constructor(
     val user: LiveData<User>
         get() = _user
 
-    private val _users = MutableLiveData<List<User>>()
-    val users: LiveData<List<User>>
+    private val _users = MutableLiveData<MutableList<User>>()
+    val users: LiveData<MutableList<User>>
         get() = _users
 
     private val _forgotPassword = MutableLiveData<UiState<String>>()

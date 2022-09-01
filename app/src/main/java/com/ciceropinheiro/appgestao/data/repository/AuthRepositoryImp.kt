@@ -21,8 +21,9 @@ class AuthRepositoryImp(
     override fun loginUser(
         email: String,
         password: String,
-        result: (UiState<String>) -> Unit) {
-        auth.signInWithEmailAndPassword(email,password)
+        result: (UiState<String>) -> Unit
+    ) {
+        auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     result.invoke(UiState.Success("Logado com Sucesso"))
@@ -48,30 +49,29 @@ class AuthRepositoryImp(
 
     override fun logout(result: () -> Unit) {
         auth.signOut()
-        appPreferences.edit().putString(SharedPrefConstants.USER_SESSION,null).apply()
+        appPreferences.edit().putString(SharedPrefConstants.USER_SESSION, null).apply()
         result.invoke()
     }
 
 
+    override fun registerUser(email: String, senha: String) {
+        auth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener {
+            if (it.isSuccessful) {
+                val firebaseUser = auth.currentUser
+                val teste = User("1", "teste", "aaa", "teste@gmail.com")
+                val creuza = User("2", "creuza", "bbb", "creuza@gmail.com")
+                val antonio = User("3", "antonio", "ccc", "antonio@gmail.com")
+                database.child(firebaseUser!!.uid).setValue(teste)
+                database.child(firebaseUser.uid).setValue(creuza)
+                database.child(firebaseUser.uid).setValue(antonio)
 
-     override fun registerUser(email: String, senha: String) {
-         auth.createUserWithEmailAndPassword(email, senha).addOnCompleteListener {
-             if (it.isSuccessful) {
-                 val firebaseUser = auth.currentUser
-                 val teste = User("1", "teste", "aaa", "teste@gmail.com")
-                 val creuza = User("2", "creuza", "bbb", "creuza@gmail.com")
-                 val antonio = User("3", "antonio", "ccc", "antonio@gmail.com")
-                     database.child(firebaseUser!!.uid).setValue(teste)
-                     database.child(firebaseUser!!.uid).setValue(creuza)
-                     database.child(firebaseUser!!.uid).setValue(antonio)
-
-             }
-         }
+            }
+        }
 
 
-     }
+    }
 
-     override fun getUserProfileInDatabase(liveData: MutableLiveData<User>) {
+    override fun getUserProfileInDatabase(liveData: MutableLiveData<User>) {
         val uid = auth.currentUser?.uid.toString()
         database.child(uid).addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -84,7 +84,10 @@ class AuthRepositoryImp(
         })
     }
 
-    override fun getAllUsers(liveDataAllUsers: MutableLiveData<List<User>>, liveDataProfile: MutableLiveData<User>) {
+    override fun getAllUsers(
+        liveDataAllUsers: MutableLiveData<MutableList<User>>,
+        liveDataProfile: MutableLiveData<User>
+    ) {
         database.addValueEventListener(object : ValueEventListener {
             val listUsuarios = mutableListOf<User>()
 
@@ -92,19 +95,10 @@ class AuthRepositoryImp(
             override fun onDataChange(snapshot: DataSnapshot) {
 
                 for (users in snapshot.children) {
-                    val usersFirebase =
-                        users.getValue(User::class.java)
-                    if (usersFirebase != null) {
-                        listUsuarios.add(usersFirebase)
-                        liveDataAllUsers.value?.forEach {
-                            if (it.nomeCompleto == liveDataProfile.value?.nomeCompleto) {
-                                listUsuarios.remove(liveDataProfile.value)
+                    users.getValue(User::class.java)?.let { listUsuarios.add(it) }
 
-                            }
-                        }
-                        liveDataAllUsers.value = listUsuarios
-                    }
                 }
+                liveDataAllUsers.value = listUsuarios
 
             }
 
