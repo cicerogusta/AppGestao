@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
-import com.ciceropinheiro.appgestao.data.model.User
 import com.ciceropinheiro.appgestao.databinding.FragmentLoginBinding
 import com.ciceropinheiro.appgestao.util.UiState
 import com.example.firebasewithmvvm.util.hide
@@ -21,6 +21,7 @@ class LoginFragment : Fragment() {
 
     lateinit var binding: FragmentLoginBinding
     val viewModel: AuthViewModel by viewModels()
+    lateinit var navigation : NavDirections
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -83,18 +84,32 @@ class LoginFragment : Fragment() {
                 is UiState.Success -> {
                     binding.loginProgress.hide()
                     toast(state.data)
-                    callFragment()
+                    observeUser()
                 }
             }
         }
     }
 
-    fun callFragment() {
+    private fun observeUser() {
+        viewModel.getUserProfile()
+        viewModel.user.observe(viewLifecycleOwner) {
+            if(it.nivelUsuario == "Coordenador") {
+                callFragment(true)
+            } else {
+                callFragment(false)
 
-        val action = LoginFragmentDirections.actionLoginFragmentToHomeFragment()
+            }
+        }
+    }
 
+    fun callFragment(nivelUsuario: Boolean) {
 
-        findNavController().navigate(action)
+        navigation = if (nivelUsuario) {
+            LoginFragmentDirections.actionLoginFragmentToCoordenadorFragment()
+        } else {
+            LoginFragmentDirections.actionLoginFragmentToProfessorFragment()
+        }
+        findNavController().navigate(navigation)
     }
 
     fun validation(): Boolean {
