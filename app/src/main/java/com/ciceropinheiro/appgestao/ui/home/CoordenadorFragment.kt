@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.NavDirections
+import androidx.navigation.fragment.findNavController
 import com.ciceropinheiro.appgestao.databinding.FragmentCoordenadorBinding
 import com.ciceropinheiro.appgestao.ui.auth.AuthViewModel
 import com.example.firebasewithmvvm.util.toast
@@ -14,6 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class CoordenadorFragment : Fragment() {
 
+    lateinit var navigation: NavDirections
     lateinit var binding: FragmentCoordenadorBinding
     val viewModel: AuthViewModel by viewModels()
 
@@ -31,7 +34,7 @@ class CoordenadorFragment : Fragment() {
 
 
         binding.imageButtonDiario.setOnClickListener {
-//            callFragment()
+            callFragment()
         }
 
 
@@ -51,12 +54,12 @@ class CoordenadorFragment : Fragment() {
         }
     }
 
-//    fun callFragment() {
-//
-//        val action = HomeFragmentDirections.actionHomeFragmentToDiarioFragment()
-//
-//
-//        findNavController().navigate(action)
-//    }
+    fun callFragment() {
+
+        navigation = CoordenadorFragmentDirections.actionCoordenadorFragmentToDiarioFragment()
+
+
+        findNavController().navigate(navigation)
+    }
 
 }

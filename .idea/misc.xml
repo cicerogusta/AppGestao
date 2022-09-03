@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/cicer/AndroidStudioProjects/AppGestao/app/src/main/res/layout/activity_main.xml" value="0.18541666666666667" />
+        <entry key="..\:/Users/cicer/AndroidStudioProjects/AppGestao/app/src/main/res/layout/fragment_coordenador.xml" value="0.3569230769230769" />
         <entry key="..\:/Users/cicer/AndroidStudioProjects/AppGestao/app/src/main/res/layout/fragment_diario.xml" value="0.25" />
         <entry key="..\:/Users/cicer/AndroidStudioProjects/AppGestao/app/src/main/res/layout/fragment_diario_item.xml" value="0.33" />
         <entry key="..\:/Users/cicer/AndroidStudioProjects/AppGestao/app/src/main/res/layout/fragment_diario_items.xml" value="0.5" />
